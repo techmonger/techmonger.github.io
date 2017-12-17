@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"> <head><link rel="shortcut icon" href="/static/images/TechMonger%28CC%29.ico"><title>Integrate ReCaptcha in Flask Web App without Plugin - Tech Monger</title><meta charset="UTF-8"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="description" content="Learn how to integrate google ReCaptcha in your flask application to prevent spam bots."><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="canonical" href="/5/python-flask-recaptcha/"></head> <body> <div class="container"> <header class="container"> <h1 class="row"><a href="/">Tech Monger</a></h1> <p class="lead row">Programming, Web Development and Computer Science.</p> </header> <span id="skiplinks" class="skip-link"> <a href="#main" title="Main Content on Page">Skip to main content</a>| <a href="#sidebar" title="Sidebar of Blog">Skip to information by topic</a> </span> <div class="row"> <main class="col-lg-10" id="main"> <article class="container" itemscope itemtype="https://schema.org/BlogPosting"> <h2 itemprop="headline">How to add ReCaptcha to Flask App without Extension</h2> <p itemprop="datePublished" title="17-11-26 18:04:53Z">Posted November 26, 2017</p> <div itemprop="articleBody"> <p class="lead">In this article we will learn to integrate Google ReCaptcha into flask web application without using any flask extension to prevent bots from submitting spam.</p> <p>Traditionally web applications used <code>CAPTCHA</code> containing image with some problem which human could solve but no automated bot can solve. In modern applications this can be achieved by using third party API like Google ReCaptcha.</p> <h3>How Google ReCaptcha API works ?</h3> <ol> <li><p>When you register for recaptcha it provides you two keys.</p></li> <ul> <li><code>Site Key</code> : For Client Side Integration</li> <li><code>Secret Key</code> : For Server Side Integration</li> </ul> <li class="top1"> <p>Whenever user submits a form configured with ReCaptcha it contains payload with name <code>g-recaptcha-response</code>.</p> </li> <li> <p>Upon submitting form your server collects <code>g-recaptcha-response</code> and sends it to google server along with <code>Secret Key</code> to make sure submitted form was from human and not from bot.</p> </li> <li> <p>Google server check <code>g-recaptcha-response</code> sent by you and returns back value suggesting whether form submission is from human or bot .</p> </li> </ol> <h3 class="top2">Registering for ReCaptcha</h3> <p>Before we begin with actual code I assume that you have registered for Google ReCaptcha and have <code>Site Key</code> and <code>Secret Key</code> for your domain.</p> <p>To test application locally add <code>localhost</code> into the domain name while registering like below.</p> <img class="img-fluid" src="/static/images/5/register-recaptcha.png" alt="Google ReCaptcha Registration with localhost"> <h3 class="top3">Implementing ReCaptcha with python and flask</h3> <p class="lead">We will create contact form which is most common use case for using flask and recaptcha. Form will allow user to submit name, email and message. At the end of the tutorial working code will be <a href="#code">pushed on github</a> for easier access.</p> <ol> <h4><li>Client side Implementation</h4> <p>For client side implementation we will include two elements into <code>html</code></p> <ol> <li>ReCaptcha Javascript Code Inside <code>head</code> tag <pre><code name="html">&lt;script src=&#34;https://www.google.com/recaptcha/api.js&#34;&gt;&lt;/script&gt;
+</code></pre> </li> <li><code>div</code> to render ReCaptcha Control inside form <pre><code name="html">&lt;div class=&#34;g-recaptcha&#34; data-sitekey=&#34;&#34;&gt;&lt;/div&gt;
+</code></pre> </li> <p>For client side we will create simple form with 4 fields. (Name, Email Address, Message and ReCaptcha.</p> <pre><code class="html" name="html">&lt;form action=&#34;/contact/&#34; method=&#34;post&#34;&gt;
+Name : &lt;input type=&#34;text&#34; name=&#34;name&#34;&gt;
+Email: &lt;input type=&#34;email&#34; name=&#34;email&#34;&gt;
+Message: &lt;textarea name=&#34;message&#34; rows=&#34;4&#34; cols=&#34;50&#34;&gt;&lt;/textarea&gt;
+Security Check &lt;div class=&#34;g-recaptcha&#34; data-sitekey=&#34;4LyrnTkskdnkneEBBBmkmdkfeeoUMkkeellls1D&#34;&gt;&lt;/div&gt;
+&lt;/form&gt;
+</code></pre> <b>Note that how we have included <code>sitekey</code> generated during ReCaptcha registration inside <code>div</code> to render ReCaptcha.</b> <code class="hljs html" name="html">&lt;div class=&#34;g-recaptcha&#34; data-sitekey=&#34;&#34;&gt;&lt;/div&gt; </code> <p class="top1">Instead of hardcoding, <code>sitekey</code> you can render it by passing it to <code>view</code> with <code>jinja2</code> from server side python code. <pre><code name="html">&lt;div class=&#34;g-recaptcha&#34; data-sitekey=&#34;{{ sitekey }}&#34;&gt;&lt;/div&gt;
+</code></pre> </li> <p class="top2">After rendering example form will look like this.</p> <figure class="figure"> <img src="/static/images/5/flask-recaptcha-contact-form.png" alt="HTML Form with ReCaptcha"> <figcaption class="text-center">Form with ReCaptcha using Python Flask</figcaption> </figure> </li> </ol> <h4><li>Server Side Integration</h4> <ol> <li>Accept form values with <code>g-recaptcha-response</code> <p>Once user has submitted the form by completing ReCaptcha challenge form will get additional field from ReCaptcha under name <code>g-recaptcha-response</code>. Accept it along with other fields with flask contact route.</p> <pre><code>@app.route("/contact/", methods=["GET", "POST"])
+def contact():
+    if request.method == "POST":
+        name = request.form['name']
+        email = request.form['email']
+        msg = request.form['message']
+        captcha_response = request.form['g-recaptcha-response']
+</code></pre> </li> <li>Verify <code>captcha_response</code> from ReCaptcha Server <p class="top2"> To check submitted token under <code>captcha_response</code> it needs to be send to google server with payload <code>response</code>. We will use python <code>requests</code>. Server will check <code>captcha_response</code> and respond <code>json</code> object <code>response_text</code>. </p> <p><code>response_text</code> will have key <code>success</code> containing value <code>true</code> if request is valid (from human) and <code>false</code> if it's invalid. We will implement this by defining <code>is_human</code> function in python. </p> <p><b>Note that we need to pass <code>Secret Key</code> generated during registration under payload <code>secret</code> to ReCaptcha server while verifying <code>captcha_response</code></b>.</p> <pre><code>def is_human(captcha_response):
+    """ Validating recaptcha response from google server
+        Returns True captcha test passed for submitted form else returns False.
+    """
+    secret = "2PmehhhhsdhsjHGOnjdnsjkfnkjsdn56HDHFjhjh"
+    payload = {'response':captcha_response, 'secret':secret}
+    response = requests.post("https://www.google.com/recaptcha/api/siteverify", payload)
+    response_text = json.loads(response.text)
+    return response_text['success']
+</code></pre> </li> <li>Process Request <p class="top2">If <code>is_human</code> returns <code>True</code> then we will process contact request else we will show message saying <em>Bots are not allowed !</em></p> <pre><code>@app.route("/contact/", methods=["GET", "POST"])
+def contact():
+    """ Renders contact form on get and processes it on post. """
+    
+    sitekey = "your-site-key-here"
+
+    if request.method == "POST":
+        name = request.form['name']
+        email = request.form['email']
+        msg = request.form['message']
+        captcha_response = request.form['g-recaptcha-response']
+        
+        if is_human(captcha_response):
+            # Process request here
+            status = "Detail submitted successfully."
+        else:
+             # Log invalid attempts
+            status = "Sorry ! Bots are not allowed."
+
+        flash(status)
+        return redirect(url_for('contact'))
+
+    return render_template("contact.html", sitekey=sitekey)
+
+</pre></code> </li> </ul> <h3 id="code">Code</h3> <div class="card"> <div class="card-body"> <p clas="top2 lead">Working code for the <a href="https://github.com/techmonger/Flask-ReCaptcha-Contact-Form" title="Flask ReCaptcha Contact Form" target="_blank">flask contact form</a> has been posted on gihub. Please configure site-key and secret key into <code>contact_form.py</code> before running the application.</p> </div> </div> </div> <p class="top3">Tagged Under :<span itemprop=" keywords"> <a href="/tag/Flask/">Flask</a> <a href="/tag/Python/">Python</a> </span> </p> </article> <div class="top3"> <div class="col-sm-9"> <span class="float-left"> <a class="btn btn-secondary btn-md" role="button" aria-disabled="false" href="/4/secure-passwords-werkzeug/" title="How to store passwords securely using Werkzeug">Previous</a> </span> <span class="float-right"> <a class="btn btn-secondary btn-md" role="button" aria-disabled="false" href="/6/exchange-davmail/" title="How to access exchange mails with Davmail">Next</a> </span> </div> </div> </main> <aside class="col-lg-2" id="sidebar"> <h3>Tags</h3> <nav> <ul> <li><a href="/tag/Flask/" title="Flask Web Development">Flask</a></li> <li><a href="/tag/Open-Source/" title="Tutorials about open source software ">Open-Source</a></li> <li><a href="/tag/Python/" title="Python Programming">Python</a></li> <li><a href="/tag/Thunderbird/" title="Thunderbird Tutorials">Thunderbird</a></li> <li><a href="/tag/Ubuntu/" title="Ubuntu Tutorials">Ubuntu</a></li> </ul> </nav> </aside> </div> <div class="top3"></div> </div> <link rel="stylesheet" type="text/css" href="/static/css/style.css"> <script src="/static/js/scripts.js" type="text/javascript"></script> <script type="text/javascript">hljs.initHighlightingOnLoad();</script> </body> </html>
