@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    <url>
+        <loc>/12/no-login-screen/</loc>
+    </url>
+
+    <url>
+        <loc>/11/ubuntu-compiz-radeon/</loc>
+    </url>
+
+    <url>
+        <loc>/10/flask-simple-authentication/</loc>
+    </url>
+
+    <url>
+        <loc>/9/thunderbird-exchange-davmail/</loc>
+    </url>
+
+    <url>
+        <loc>/8/davmail-windows/</loc>
+    </url>
+
+    <url>
+        <loc>/7/davmail-linux/</loc>
+    </url>
+
+    <url>
+        <loc>/6/exchange-davmail/</loc>
+    </url>
+
+    <url>
+        <loc>/5/python-flask-recaptcha/</loc>
+    </url>
+
+    <url>
+        <loc>/4/secure-passwords-werkzeug/</loc>
+    </url>
+
+    <url>
+        <loc>/3/linux-windows-ftp/</loc>
+    </url>
+
+    <url>
+        <loc>/2/simple-parabola-matplotlib/</loc>
+    </url>
+
+    <url>
+        <loc>/1/openshift-flask-app/</loc>
+    </url>
+
+</urlset>
