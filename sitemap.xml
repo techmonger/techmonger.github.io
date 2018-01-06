@@ -2,6 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     <url>
+        <loc>https://techmonger.github.io/18/long-running-workflows/</loc>
+    </url>
+
+    <url>
+        <loc>https://techmonger.github.io/17/admin-console-creds-issue/</loc>
+    </url>
+
+    <url>
+        <loc>https://techmonger.github.io/16/tomcat-cleanup/</loc>
+    </url>
+
+    <url>
+        <loc>https://techmonger.github.io/15/broken-admin-console/</loc>
+    </url>
+
+    <url>
         <loc>https://techmonger.github.io/14/localtunnel-example/</loc>
     </url>
 
