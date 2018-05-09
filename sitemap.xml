@@ -2,6 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     <url>
+        <loc>https://techmonger.github.io/31/informatica-session-queries/</loc>
+    </url>
+
+    <url>
+        <loc>https://techmonger.github.io/30/session-stats/</loc>
+    </url>
+
+    <url>
         <loc>https://techmonger.github.io/29/secure-pmrep-pmcmd/</loc>
     </url>
 

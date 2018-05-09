@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en"> <head><link rel="shortcut icon" href="/static/images/TechMonger%28CC%29.ico"><title>GetSessionStatistics - Informatica Session Statistics using PMCMD - Tech Monger</title><meta charset="UTF-8"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="description" content="In this tutorial we will learn how to extract session run information from command line using Informatica's pmcmd api."><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="canonical" href="/30/session-stats/"><style>.lead{font-size:1.25rem;font-weight:300}</style></head> <body> <div class="container"> <header class="container"> <h1 class="row"><a href="/">Tech Monger</a></h1> <p class="lead row">Programming, Web Development and Computer Science.</p> </header> <span id="skiplinks" class="skip-link"> <a href="#main" title="Main Content on Page">Skip to main content</a>| <a href="#sidebar" title="Sidebar of Blog">Skip to information by topic</a> </span> <div class="row"> <main class="col-lg-10" id="main"> <article class="container" itemscope itemtype="https://schema.org/BlogPosting"> <h2 itemprop="headline">Get Session Statistics in Informatica from Command Line</h2> <p itemprop="datePublished" title="18-05-09 17:51:52Z">Posted May 09, 2018</p> <div itemprop="articleBody"> <p class="lead"> In this tutorial we will learn how to use <code>pmcmd</code> <code>getsessionstatistics</code> command to fetch essential session run information. This tool is handy especially if you want to automate report containing session run summary. In output you would get vital details about session and transformations like <mark>Failed and Success Rows of Source & Target</mark>, Transformation statistics like <mark>Applied, Affected and Rejected rows</mark>, <mark>Throughput Per Second</mark>. Additionally it also outputs an <mark>error code </mark> along with error details of both individual transformations and session. </p> <h3>Important Options and Arguments</h3> <p>GetSessionStatistics command requires following parameters.</p> <table class="table text-center"> <tr> <th>Flag</th> <th>Use</th> </tr> <tr> <td>-f or -folder</td> <td>Name of folder in which workflow resides.</td> </tr> <tr> <td>-w or -workflow</td> <td>Name of Workflow.</td> </tr> <tr> <td></td> <td>Space separated session name.</td> </tr> </table> <p>GetSessionStatistics also accepts following arguments apart from above Arguments</p> <table class="table text-center"> <tr> <th>Flag</th> <th>Use</th> </tr> <tr> <td>-rn or -runinsname</td> <td>Name of the run instance of workflow. Useful when running multiple tasks in parallel.</td> </tr> <tr> <td>-wfrunid</td> <td>Accepts workflow run id for the task.</td> </tr> </table> <h3>GetSessionStatistics Example</h3> <p> Before running <code>getsessionstatistics</code> command first <a href="/29/secure-pmrep-pmcmd/#pmcmd" title="PMCMD Connect Command">connect to the integration service using pmcmd</a> either in interactive or in command Line mode. </p> <h4>General Syntax</h4> <pre class="bash"><code>getsessionstatistics  -f  "Folder Name"  -w  "Workflow Name" "Session Name"
+</code></pre> <h4>Example in Interactive Mode</h4> <p>Secure Connection using Environment Variables <code>INF_UNAME </code> and <code>INF_PWD</code></p> <pre class="bash"><code>pmcmd 
+connect -sv  "integration service"  -d  "domain-name"  -uv INF_UNAME  -pv INF_PWD
+Connected to Integration Service: [integration service].
+getsessionstatistics  -f  MY_FOLDER_NAME  -w  MY_WORKFLOW_NAME  MY_SESSION_NAME
+</code></pre> <p>Connection without Environment Variables. </p> <pre class="bash"><code>pmcmd 
+connect  -sv  "integration service"  -d  "domain-name"  -u  MY_USERNAME
+password:
+Connected to Integration Service: [integration service].
+getsessionstatistics  -f  MY_FOLDER_NAME  -w  MY_WORKFLOW_NAME  MY_SESSION_NAME
+</code></pre> <h4>Example in Command Line Mode</h4> <p>Secure Invocation using Environment Variables <code>INF_UNAME </code> and <code>INF_PWD</code> in command line mode.</p> <pre class="bash"><code>pmcmd  getsessionstatistics  -sv  "integration service" -d  "domain-name"  -uv  
+INF_UNAME  -pv  INF_PWD  -f  MY_FOLDER_NAME  -w  MY_WORKFLOW_NAME  MY_SESSION_NAME
+</code></pre> <p>Invocation without Environment Variables.</p> <pre class="bash"><code>pmcmd  getsessionstatistics  -sv  "integration service"  -d  "domain-name"  -u  
+MY_USERNAME  -p  *****  -f  MY_FOLDER_NAME  -w  MY_WORKFLOW_NAME  MY_SESSION_NAME
+</code></pre> <h4>Output of GetSessionStatistics</h4> <pre class="bash"><code>Folder: [MY_FOLDER_NAME]
+Workflow: [MY_WORKFLOW_NAME]
+Instance: [MY_SESSION_NAME]
+Mapping: [MY_MAPPING_NAME]
+Session log file: [/path/to/session.log]
+Source success rows: [10000]
+Source failed rows: [5]
+Target success rows: [50000]
+Target failed rows: [10]
+Number of transformation errors: [0]
+First error code [3824]
+First error message: [[ERROR] Type:(Teradata DBS Error)]
+Task run status: [Failed]
+Integration Service: [INT_SERVICE_NAME]
+Integration Service Process: [INT_SERVICE_PROCESS_NAME]
+Integration Service Grid: [INT_SERVICE_GRID_NAME]
+----------------------------
+Node Name(s) [NODE_NAME]
+Preparation fragment
+
+Partition: [Partition #1]
+Transformation instance: [T1_TRANS_NAME]
+Transformation: [T1_TRANS_NAME]
+Applied rows: [39000]
+Affected rows: [43000]
+Rejected rows: [0]
+Throughput(Rows/Sec): [5]
+Throughput(Bytes/Sec): [0]
+Last error code [0], message [No errors encountered.]
+Start time: [Wed May 02 02:30:22 2018]
+End time: [Wed May 02 21:50:59 2018]
+
+Partition: [Partition #1]
+Transformation instance: [T2_TRANS_NAME]
+Transformation: [T2_TRANS_NAME]
+Applied rows: [56333]
+Affected rows: [56333]
+Rejected rows: [0]
+Throughput(Rows/Sec): [5]
+Throughput(Bytes/Sec): [0]
+Last error code [0], message [No errors encountered.]
+Start time: [Wed May 02 02:30:22 2018]
+End time: [Wed May 02 21:50:59 2018]
+</code></pre> <div class="card"> <p class="card-body"> Using <code>getsessionstatistics</code> of <code>pmcmd</code> you can retrieve information about session run without opening powercenter monitor and can send statistics as report via script. If you don not want complete statistics but only need specific values of session run then you should query repository to get session run details.</p> </div> </div> <p class="top3">Tagged Under :<span itemprop="keywords"> <a href="/tag/informatica/">Informatica</a> <a href="/tag/pmcmd/">PMCMD</a> </span> </p> </article> <div class="top3"> <div class="col-sm-9"> <span class="float-left"> <a class="btn btn-secondary btn-md" role="button" aria-disabled="false" href="/29/secure-pmrep-pmcmd/" title="Write Secure Informatica Code with PMCMD and PMREP">Previous</a> </span> <span class="float-right"> <a class="btn btn-secondary btn-md" role="button" aria-disabled="false" href="/31/informatica-session-queries/" title="Informatica Session Information Repository Queries">Next</a> </span> </div> </div> </main> <aside class="col-lg-2" id="sidebar"> <h3>Tags</h3> <nav> <ul> <li><a href="/tag/davmail/" title="Davmail Setup and Configuration">Davmail</a></li> <li><a href="/tag/flask/" title="Flask Web Development">Flask</a></li> <li><a href="/tag/informatica/" title="Informatica Administration Tutorials">Informatica</a></li> <li><a href="/tag/linux/" title="Linux Desktop and Server - Tutorials">Linux</a></li> <li><a href="/tag/localtunnel/" title="Localtunnel Tutorials -  HTTP Tunnel in Action">Localtunnel</a></li> <li><a href="/tag/matplotlib/" title="Matplotlib Examples and Tutorials">Matplotlib</a></li> <li><a href="/tag/open-source/" title="Tutorials about open source software ">Open Source</a></li> <li><a href="/tag/python/" title="Python Programming">Python</a></li> <li><a href="/tag/raspberry-pi/" title="Raspberry Pi Tutorials and Hacks">Raspberry Pi</a></li> <li><a href="/tag/thunderbird/" title="Thunderbird Tutorials">Thunderbird</a></li> <li><a href="/tag/ubuntu/" title="Ubuntu Tutorials">Ubuntu</a></li> <li><a href="/tag/windows/" title="Windows Software and Tutorials">Windows</a></li> </ul> </nav> <a href="/feeds/" title="Atom Feed - Tech Monger"><i class="fa fa-rss" aria-hidden="true"></i>&nbsp;&nbsp;Feeds</a> </aside> </div> <div class="top3"></div> </div> <link rel="stylesheet" type="text/css" href="/static/css/style.css"> <script src="/static/js/scripts.js"></script> <script>hljs.initHighlightingOnLoad();</script> </body> </html>
