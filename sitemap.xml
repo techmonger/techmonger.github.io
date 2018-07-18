@@ -2,6 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     <url>
+        <loc>https://techmonger.github.io/38/parallel-pmrep-connect/</loc>
+    </url>
+
+    <url>
+        <loc>https://techmonger.github.io/37/pmrep-notify-informatica/</loc>
+    </url>
+
+    <url>
         <loc>https://techmonger.github.io/36/glob-to-regex/</loc>
     </url>
 
