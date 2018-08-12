@@ -2,6 +2,10 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     <url>
+        <loc>https://techmonger.github.io/43/ssh-google-vm/</loc>
+    </url>
+
+    <url>
         <loc>https://techmonger.github.io/42/flask-basic-auth/</loc>
     </url>
 
