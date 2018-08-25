@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en"> <head><link rel="shortcut icon" href="/static/images/TechMonger%28CC%29.ico"><title>Wordpress - Free Letsencrypt SSL Certficate - Tech Monger</title><meta charset="UTF-8"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="description" content="Learn how to enable https on wordpress site free using letsencrypt's ssl certificate. Install SSL with EFF's Cerbot."><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="canonical" href="/48/free-ssl-wordpress/"><style>.lead{font-size:1.25rem;font-weight:300}</style></head> <body> <div class="container"> <header class="container"> <h1 class="row"><a href="/">Tech Monger</a></h1> <p class="lead row">Programming, Web Development and Computer Science.</p> </header> <span id="skiplinks" class="skip-link"> <a href="#main" title="Main Content on Page">Skip to main content</a>| <a href="#sidebar" title="Sidebar of Blog">Skip to information by topic</a> </span> <div class="row"> <main class="col-lg-10" id="main"> <article class="container" itemscope itemtype="https://schema.org/BlogPosting"> <a href="/48/free-ssl-wordpress/"> <h2 itemprop="headline">Lets Encrypt Wordpress on Google Cloud </h2> </a> <p itemprop="datePublished" title="18-08-23 11:59:12Z">Posted August 23, 2018</p> <div itemprop="articleBody"> <p class="lead"> In this tutorial we will enable <code>https</code> on wordpress site. We will install letsencrypt ssl certificate using <abbr title="Electronic Frontier Foundation"> EFF</abbr>'s Certbot client. We will perform installation on <a href="/47/wordpress-google-cloud/" title="Free Wordpress Hosting on Google Cloud">wordpress vm hosted on google cloud</a>. However you can follow the same steps for your self hosted wordpress setup. </p> <h3 class="top3">Steps to Install Let's Encrypt's Free SSL Certificates on Wordpress</h3> <div class="card"> <div class="card-body"> <ol start="0"> <li class="top1"><a href="#prerequisite">Prerequisite</a></li> <li class="top1"><a href="#https">Enable HTTPS for Wordpress VM</a></li> <li class="top1"><a href="#ssh">Test SSH Connection</a></li> <li class="top1"><a href="#backup">Backup Configuration Files</a></li> <li class="top1"><a href="#certbot">Install Certbot Client</a></li> <li class="top1"><a href="#certificate">Install Certificates with Certbot</a></li> <li class="top1"><a href="#settings">Change Wordpress Address and Site Address</a></li> <li class="top1"><a href="#test">Test HTTPS Connection</a></li> <li class="top1"><a href="#auto-renew">Auto Renewal of Certificates</a></li> </ol> </div> </div> <hr> <ol start="0" class="top3"> <h4 id="prerequisite" class="top2"><li>Prerequisites</h4> <p> Before proceeding with ssl certificate installation we will assume that you have working wordpress site and accessible via domain name. It is also assumed that you can ssh wordpress server either via browser or <a href="/43/ssh-google-vm/" title="SSH Google VM from using public Key">via local machine</a>. </p> </li> <hr> <h4 id="https"><li>Enable HTTPS for Wordpress VM</h4> <p>Open Google Cloud Console and <b>Edit</b> Compute Engine Instance to enable <code>HTTPS</code> traffic. This will open HTTPS port <code>443</code> to cater <code>HTTPS</code> requests.</p> <figure class="text-center"> <img class="img-fluid" src="/static/images/48/enable-https.png" alt="Open Port 443 by Enabling HTTPS on Compute Engine Instance"> <figcaption class="text-center top1">Enable HTTPS - Wordpress Google Cloud</figcaption> </figure> <hr> <h4 id="ssh"><li>Test SSH Connection</h4> <p>In order to access vm hosting wordpress via terminal you should either open vm terminal in google cloud console or can configure key based ssh connection to login from local machine as described earlier.</p> <pre class="bash"><code>techmonger@ubuntu:~$ ssh 93.184.216.34
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+
+techmonger@google-vm:~$
+</code></pre> </li> <hr> <h4 id="backup"><li>Backup Configuration Files</h4> <p class="top2"> During certificate installation apache's configuration file will get overwritten by certbot. We should backup apache configuration files present inside <code>/etc/apache2</code> and wordpress <code>.htaccess</code> file present inside <code> /var/www/html/</code> (if you have one). We can restore configuration if something breaks during certificate installation. </p> <pre class="bash"><code>$ mkdir /tmp/apache_config_backup/
+$ cp -r /etc/apache2/* /tmp/apache_config_backup/
+$ cp /var/www/html/.htaccess /tmp/
+</code></pre> </li> <hr> <h4 id="certbot"><li>Install Certbot Client</h4> <p>To install certbot client read instructions at <code>https://certbot.eff.org</code> for your webserver and operating system. We are using Wordpress VM at google cloud which come up with Linux (Debian) OS and Apache webserver. With following command we will install certbot. <pre class="bash"><code>$ sudo apt-get install python-certbot-apache -t stretch-backports
+</code></pre> </li> <hr> <h4 id="certificate"><li>Install Certificates with Certbot</h4> <p class="top2">Certificates installation process will be same for the wordpress setup as that of <a href="/46/free-ssl-google-cloud/" title="Free SSL Certificates on Google Cloud">static website on google cloud.</a> We will go through it again.</p> <ol type="I"> <li><p>Initiate Certificate Installation Program</p> <pre class="bash"><code>$ sudo certbot --authenticator webroot --installer apache
+
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Plugins selected: Authenticator webroot, Installer apache
+</code></pre> </li> <li><p>Provide valid <strong>Email Address</strong></p> <pre class="bash"><code>Enter email address (used for urgent renewal and security notices)
+(Enter 'c' to cancel): techmonger@example.com
+
+</code></pre> <li><p><strong>Accept (A)</strong> Let's Encrypt Terms and Conditions</p> <pre class="bash"><code>Please read the Terms of Service at
+https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf.
+You must agree in order to register with the ACME server at
+https://acme-v01.api.letsencrypt.org/directory
+(A)gree/(C)ancel: A
+
+</code></pre> </li> <li><p>Option to Share Email with EFF. Select <strong>(Y/N)</strong> depending on your preferences.</p> <pre class="bash"><code>Would you be willing to share your email address with the
+Electronic Frontier Foundation, a founding partner of the
+Let's Encrypt project and the non-profit organization that
+develops Certbot? We'd like to send you email about our work
+encrypting the web, EFF news, campaigns, and ways to
+support digital freedom.
+(Y)es/(N)o: Y
+
+</code></pre> </li> <li><p><strong>Domain name</strong> to install certificate for. (<code>example.com</code>)</p> <pre class="bash"><code>No names were found in your configuration files.
+Please enter in your domain name(s) (comma and/or space separated)
+(Enter 'c' to cancel): example.com
+
+Obtaining a new certificate
+Performing the following challenges:
+http-01 challenge for example.com
+</code></pre> </li> <li><p><strong>Web Server root</strong> where website content is stored and accessible.(<code>/var/www/html</code>)</p> <pre class="bash"><code>Input the webroot for example.com:
+(Enter 'c' to cancel): /var/www/html
+
+Waiting for verification...
+Cleaning up challenges
+Created an SSL vhost at
+/etc/apache2/sites-available/000-default-le-ssl.conf
+Enabled Apache socache_shmcb module
+Enabled Apache ssl module
+Deploying Certificate to VirtualHost
+/etc/apache2/sites-available/000-default-le-ssl.conf
+Enabling available site:
+/etc/apache2/sites-available/000-default-le-ssl.conf
+</code></pre> </li> <li><p>Option To configure <code>HTTP</code> to <code>HTTPS</code> <strong>redirect</strong>. Select <strong> 1 or 2</strong> depending on whether or not you want to configure redirect.</p> <pre class="bash"><code>Please choose whether or not to redirect HTTP traffic to HTTPS,
+removing HTTP access.
+-----------------------------------------------------
+1: No redirect - Make no further changes to the webserver configuration.
+2: Redirect - Make all requests redirect to secure HTTPS access.
+Choose this for new sites, or if you're confident your site works on HTTPS
+You can undo this change by editing your web server's configuration.
+-----------------------------------------------------
+Select the appropriate number [1-2] then [enter] (press 'c' to cancel): 2
+
+Enabled Apache rewrite module
+Redirecting vhost in
+/etc/apache2/sites-enabled/000-default.conf to ssl vhost in
+/etc/apache2/sites-available/000-default-le-ssl.conf
+-----------------------------------------------------
+</code></pre> <li><p>Message for <strong>Successful</strong> Configuration</p> <pre class="bash"><code>Congratulations! You have successfully enabled https:/example.com
+
+You should test your configuration at:
+https://www.ssllabs.com/ssltest/analyze.html?d=example.com
+</code></pre> </li> <li><p><strong>Details</strong> about certificate files</p> <pre class="bash"><code>IMPORTANT NOTES:
+ - Congratulations! Your certificate and chain have been saved at:
+   /etc/letsencrypt/live/example.com/fullchain.pem
+   Your key file has been saved at:
+   /etc/letsencrypt/live/example.com/privkey.pem
+   Your cert will expire on 2018-09-10. To obtain a new or tweaked
+   version of this certificate in the future, simply run certbot again
+   with the "certonly" option. To non-interactively renew *all* of
+   your certificates, run "certbot renew"
+ - Your account credentials have been saved in your Certbot
+   configuration directory at /etc/letsencrypt. You should make a
+   secure backup of this folder now. This configuration directory will
+   also contain certificates and private keys obtained by Certbot so
+   making regular backups of this folder is ideal.
+ - If you like Certbot, please consider supporting our work by:
+
+   Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
+   Donating to EFF:https://eff.org/donate-le
+</code></pre> </li> </ol> </li> <hr> <h4 id="settings" class="top2"><li>Change Wordpress Address and Site Address</h4> <p> Login wordpress and move to <code>settings</code>. Change <code>WordPress Address (URL)</code> and <code>Site Address (URL)</code> to https version of the site.</a>. it might give you an error for the ssl certficate security exception. <strong>Confirm security exception</strong> to make changes. </p> </li> <figure class="text-center"> <img class="img-fluid" src="/static/images/48/wordpress-site-address-settings.png" alt="Wordpres Address Settings"> <figcaption class="text-center top1">HTTPS Address for the Wordpress</figcaption> </figure> <hr> <h4 id="test"><li>Test HTTPS Connection</h4> <p> You can check HTTPS connection of your wordpress website in browser. If you are facing issues while connecting with HTTPS then learn about <a href="/50/certbot-apache-configuration/" title="Let's Encrypt - Certbot Apache Configuration">configuration changes made by certbot</a> to tweak them or restore old configuration back. </p> </li> <hr> <h4 id="auto-renew"><li>Auto Renewal of Certificates</h4> <p>SSL certificates provided by let'sencrypt would expire after <strong>90 days</strong> of installation. Certbot will create cronjob to autonew certificates inside <code>/etc/cron.d/certbot</code>. Learn <a href="/49/certbot-auto-renew/" title="Renew Letsencrypt Certificates using Cron">how certbot's auto renewal script is setup as cron</a>. </p> </li> <hr> </div> <p class="top3">Tagged Under :<span itemprop="keywords"> <a href="/tag/certbot/">Certbot</a> <a href="/tag/google-cloud/">Google Cloud</a> <a href="/tag/lets-encrypt/">Lets Encrypt</a> <a href="/tag/linux/">Linux</a> <a href="/tag/open-source/">Open Source</a> <a href="/tag/web/">Web</a> <a href="/tag/wordpress/">Wordpress</a> </span> </p> </article> <div class="top3"> <div class="col-sm-9"> <span class="float-left"> <a class="btn btn-secondary btn-md" role="button" aria-disabled="false" href="/47/wordpress-google-cloud/" title="Install Wordpress on Google Cloud for Free">Previous</a> </span> <span class="float-right"> <a class="btn btn-secondary btn-md" role="button" aria-disabled="false" href="/49/certbot-auto-renew/" title="Certbot SSL Certification Auto Renew Cron Job">Next</a> </span> </div> </div> </main> <aside class="col-lg-2" id="sidebar"> <h3>Tags</h3> <nav> <ul> <li><a href="/tag/davmail/" title="Davmail Setup and Configuration">Davmail</a></li> <li><a href="/tag/flask/" title="Flask Web Development">Flask</a></li> <li><a href="/tag/google-cloud/" title="Google Cloud Tutorials and Examples">Google Cloud</a></li> <li><a href="/tag/informatica/" title="Informatica Administration Tutorials">Informatica</a></li> <li><a href="/tag/linux/" title="Linux Desktop and Server - Tutorials">Linux</a></li> <li><a href="/tag/localtunnel/" title="Localtunnel Tutorials -  HTTP Tunnel in Action">Localtunnel</a></li> <li><a href="/tag/open-source/" title="Tutorials about open source software ">Open Source</a></li> <li><a href="/tag/python/" title="Python Programming">Python</a></li> <li><a href="/tag/raspberry-pi/" title="Raspberry Pi Tutorials and Hacks">Raspberry Pi</a></li> <li><a href="/tag/thunderbird/" title="Thunderbird Tutorials">Thunderbird</a></li> <li><a href="/tag/ubuntu/" title="Ubuntu Tutorials">Ubuntu</a></li> <li><a href="/tag/web/" title="Tutorials for Full Stack Web Developers">Web</a></li> <li><a href="/tag/windows/" title="Windows Software and Tutorials">Windows</a></li> <li><a href="/tag/wordpress/" title="Wordpress Tutorials and Guides">Wordpress</a></li> </ul> </nav> <a href="/feeds/" title="Atom Feed - Tech Monger"><i class="fa fa-rss" aria-hidden="true"></i>&nbsp;&nbsp;Feeds</a> </aside> </div> <div class="top3"></div> </div> <link rel="stylesheet" type="text/css" href="/static/css/style.css"> <script src="/static/js/scripts.js"></script> <script>hljs.initHighlightingOnLoad();</script> </body> </html>

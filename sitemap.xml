@@ -2,6 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     <url>
+        <loc>https://techmonger.github.io/50/certbot-apache-configuration/</loc>
+    </url>
+
+    <url>
+        <loc>https://techmonger.github.io/49/certbot-auto-renew/</loc>
+    </url>
+
+    <url>
+        <loc>https://techmonger.github.io/48/free-ssl-wordpress/</loc>
+    </url>
+
+    <url>
+        <loc>https://techmonger.github.io/47/wordpress-google-cloud/</loc>
+    </url>
+
+    <url>
         <loc>https://techmonger.github.io/46/free-ssl-google-cloud/</loc>
     </url>
 
