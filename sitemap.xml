@@ -2,6 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     <url>
+        <loc>https://techmonger.github.io/53/infacmd-get-session-log/</loc>
+    </url>
+
+    <url>
+        <loc>https://techmonger.github.io/52/infacmd-get-workflow-log/</loc>
+    </url>
+
+    <url>
+        <loc>https://techmonger.github.io/51/informatica-infacmd-connection/</loc>
+    </url>
+
+    <url>
         <loc>https://techmonger.github.io/50/certbot-apache-configuration/</loc>
     </url>
 
