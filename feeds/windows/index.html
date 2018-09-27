@@ -2,10 +2,43 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Recent Windows Posts from Tech Monger</title>
   <id>:///feeds/windows/</id>
-  <updated>2018-08-19T16:43:33.887726Z</updated>
+  <updated>2018-09-27T19:28:25.494312Z</updated>
   <link href=":///" />
   <link href=":///feeds/windows/" rel="self" />
   <generator>Werkzeug</generator>
+  <entry xml:base=":///feeds/windows/">
+    <title type="text">Github SSH Key Configuration for Login</title>
+    <id>https://techmonger.github.io/59/github-ssh-keys</id>
+    <updated>2018-09-27T19:28:25.494312Z</updated>
+    <published>2018-09-27T19:02:05.629369Z</published>
+    <link href="https://techmonger.github.io/59/github-ssh-keys" />
+    <author>
+      <name>Tech Monger</name>
+    </author>
+    <content type="html">&lt;p class=&quot;lead&quot;&gt;In previous post we discussed regarding an &lt;a href=&quot;&quot;/57/git-saml-sso-login/ title=&quot;SAMS SSO : Password authentication is not available for Git operations.&quot;&gt;issues with Github's SAML SSO Login&lt;/a&gt; which stops developers from accessing github repositories using username and password from git command line client. Also even if authentication is working correctly, we always need to provide username and password during git operations which is not convenient while writing programmable scripts. In this tutorial we will setup SSH keys in github account and eliminate manual input of username and password completely.</content>
+  </entry>
+  <entry xml:base=":///feeds/windows/">
+    <title type="text">Personal Access Token for Github Login</title>
+    <id>https://techmonger.github.io/58/github-token-authentication</id>
+    <updated>2018-09-27T19:25:39.636689Z</updated>
+    <published>2018-09-27T18:15:05.917922Z</published>
+    <link href="https://techmonger.github.io/58/github-token-authentication" />
+    <author>
+      <name>Tech Monger</name>
+    </author>
+    <content type="html">&lt;p class=&quot;lead&quot;&gt;When you try to access github repository from remote client or from automated program it requires you to login github account. For most use cases login with username and password works. However as we &lt;a href=&quot;/57/git-saml-sso-login/&quot; title=&quot;Github SAML Authentication Failure&quot;&gt;discussed earlier&lt;/a&gt; if you are using private github setup by your organization on enterprise cloud then your may require alternative authentication method because &lt;abbr title=&quot;Security Assertion Markup Language&quot;&gt;SAML&lt;/abbr&gt; &lt;abbr title=&quot;Single Sign On&quot;&gt;SSO&lt;/abbr&gt; login wont allow authentication with sso username and password. Using an alternative authentication like access token or &lt;a href=&quot;/59/github-ssh-keys/&quot; title=&quot;Github Login with SSH Keys&quot;&gt;ssh keys&lt;/a&gt; would allow you to login github repository remotely. In this tutorial we will demonstrate github login with personal access token.</content>
+  </entry>
+  <entry xml:base=":///feeds/windows/">
+    <title type="text">Github SAML SSO Login Issues - Solutions</title>
+    <id>https://techmonger.github.io/57/git-saml-sso-login</id>
+    <updated>2018-09-27T19:23:32.590730Z</updated>
+    <published>2018-09-27T17:43:45.896732Z</published>
+    <link href="https://techmonger.github.io/57/git-saml-sso-login" />
+    <author>
+      <name>Tech Monger</name>
+    </author>
+    <content type="html">&lt;p class=&quot;lead&quot;&gt;If you are working for private Github business cloud setup by your organization then chances are authentication method will be &lt;abbr title=&quot;Security Assertion Markup Language&quot;&gt;SAML&lt;/abbr&gt; based &lt;abbr title=&quot;Single Sign On&quot;&gt;SSO&lt;/abbr&gt; Login. When you try to access github repository via git client by logging in using sso username and password you will face following issues with login. In this tutorial we will discuss issues faced during login and in &lt;a href=&quot;#solution&quot; title=&quot;Git SSO Login Mehods&quot;&gt;next tutorials&lt;/a&gt; we will overcome authentication issues by setting up an alternative authentication methods.</content>
+  </entry>
   <entry xml:base=":///feeds/windows/">
     <title type="text">Setup SFTP with Google Cloud</title>
     <id>https://techmonger.github.io/44/sftp-google-cloud-vm</id>
@@ -93,27 +126,5 @@
       <name>Tech Monger</name>
     </author>
     <content type="html">&lt;p class=&quot;lead&quot;&gt;In this post we will discuss all possible command line options supported by localtunnel with examples. Localtunnel is npm package and does not have man page of it's own. However you can check options by &lt;code&gt;--help&lt;/code&gt;. Read this simple explanation below if some of it's features seems obscuring to you. If you have not already installed localtunnel then read previous post to &lt;a href=&quot;/13/localtunnel-ubuntu/&quot; title=&quot;Install Localtunnel using NPM&quot;&gt;install localtunnel&lt;/a&gt; and get your web server online with minimalistic setup. &lt;/p&gt;                        &lt;h3&gt;Localtunnel Client (&lt;code&gt;lt&lt;/code&gt;) Options&lt;/h3&gt;</content>
-  </entry>
-  <entry xml:base=":///feeds/windows/">
-    <title type="text">Access Exchange Emails on Windows with Davmail</title>
-    <id>https://techmonger.github.io/8/davmail-windows</id>
-    <updated>2017-12-23T20:21:43.662770Z</updated>
-    <published>2017-12-08T18:36:54.921927Z</published>
-    <link href="https://techmonger.github.io/8/davmail-windows" />
-    <author>
-      <name>Tech Monger</name>
-    </author>
-    <content type="html">&lt;p class=&quot;lead&quot;&gt;Before we begin with setup I assume that you have downloaded latest version of davmail for windows and &lt;a href=&quot;/6/exchange-davmail/#download&quot; title=&quot;Open source alternative to outlook exchange&quot;&gt;understand working of davmail&lt;/a&gt; to connect to the exchange server with &lt;abbr title=&quot;Exchange Web Services&quot;&gt;&lt;code&gt;EWS&lt;/code&gt;&lt;/abbr&gt;.</content>
-  </entry>
-  <entry xml:base=":///feeds/windows/">
-    <title type="text">Transfer files between Ubuntu and Windows using FTP</title>
-    <id>https://techmonger.github.io/3/linux-windows-ftp</id>
-    <updated>2018-01-06T15:45:37.823413Z</updated>
-    <published>2017-11-19T15:10:28.662371Z</published>
-    <link href="https://techmonger.github.io/3/linux-windows-ftp" />
-    <author>
-      <name>Tech Monger</name>
-    </author>
-    <content type="html">&lt;p class=&quot;lead&quot;&gt;In this tutorial we will learn how to use vsftpd on Linux to make Ubuntu machine run as ftp server and transfer files over wifi on local network.&lt;/p&gt;</content>
   </entry>
 </feed>
