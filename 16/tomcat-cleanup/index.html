@@ -19,9 +19,9 @@ zip -r /tmp/tomcat_work.zip *
 </code></pre> </li> <h4><li>Cleaning Up</h4> <p>Before you remove files make sure that no <code>.war</code> file is getting deleted. You can always check for war files in each directory. </p> <pre><code class="bash">ls -l *war
 </code></pre> <pre><code class="bash">cd $INFA_HOME/services/AdministratorConsole/webapps
 rm -rf adminhelp administrator ROOT adminconsole monitoring ows passwordchange
-</code></pre> <pre><code class="bash">cd $INFA_HOME/tomcat/work
-rm -rf ROOT coreservices csm adminconsole
 </code></pre> <pre><code class="bash">cd $INFA_HOME/tomcat/webapps
+rm -rf ROOT coreservices csm adminconsole
+</code></pre> <pre><code class="bash">cd $INFA_HOME/tomcat/work
 rm -rf *
 </code></pre> <pre><code class="bash">cd $INFA_HOME/tomcat/temp
 rm -rf *
