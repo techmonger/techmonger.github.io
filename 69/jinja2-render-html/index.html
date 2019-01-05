@@ -5,7 +5,7 @@
 jinja2_template_string = open("template.html", 'rb').read()
 
 # Create Template Object
-template = Template(template_string)
+template = Template(jinja2_template_string)
 
 # Render HTML Template String
 html_template_string = template.render(name = "John")</code></pre> <pre class="python top1"><code>print html_template_string
