@@ -2,6 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     <url>
+        <loc>https://techmonger.github.io/79/odbc-test-pyodbc/</loc>
+    </url>
+
+    <url>
+        <loc>https://techmonger.github.io/78/odbc-test-pyodbc/</loc>
+    </url>
+
+    <url>
         <loc>https://techmonger.github.io/77/odbc-ssl-postgres/</loc>
     </url>
 
