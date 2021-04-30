@@ -2,6 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     <url>
+        <loc>https://techmonger.github.io/83/executable-but-not-readable/</loc>
+    </url>
+
+    <url>
+        <loc>https://techmonger.github.io/82/pyinstaller-script-to-binary/</loc>
+    </url>
+
+    <url>
+        <loc>https://techmonger.github.io/81/redshift-odbc-linux/</loc>
+    </url>
+
+    <url>
+        <loc>https://techmonger.github.io/80/git-lfs-rhel/</loc>
+    </url>
+
+    <url>
         <loc>https://techmonger.github.io/79/aws-cli-linux/</loc>
     </url>
 

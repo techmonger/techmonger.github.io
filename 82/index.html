@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en"> <head><link rel="shortcut icon" href="/static/images/TechMonger%28CC%29.ico"><title>Generate Executable Binary From Python Program - Pyinstaller - Tech Monger</title><meta charset="UTF-8"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="description" content="We will learn to convert python code to binary which can be deployed across different platforms."><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="canonical" href="/82/pyinstaller-script-to-binary/"><style>.lead{font-size:1.25rem;font-weight:300}</style></head> <body> <div class="container"> <header class="container"> <h1 class="row"><a href="/">Tech Monger</a></h1> <p class="lead row">Programming, Web Development and Computer Science.</p> </header> <span id="skiplinks" class="skip-link"> <a href="#main" title="Main Content on Page">Skip to main content</a>| <a href="#sidebar" title="Sidebar of Blog">Skip to information by topic</a> </span> <div class="row"> <main class="col-lg-9" id="main"> <article class="container" itemscope itemtype="https://schema.org/BlogPosting"> <a href="/82/pyinstaller-script-to-binary/"> <h2 itemprop="headline">Python Script to Cross Platform Binary - PyInstaller </h2> </a> <p itemprop="datePublished" title="21-04-30 14:40:21Z">Posted April 30, 2021</p> <div itemprop="articleBody"> <p class="lead"> As a python developer you might want to ship your code to other platforms where python interpreter is not installed. In such event you would need to rely on the binary execution. You can use <code>pyinstaller</code> to achieve your aim; where you can convert your python code to executable binary. </p> <h2>Steps to Generate Binary with PyInstaller</h2> <ul> <li> <p> Create virtual environment and Install <code>pyinstaller</code> with <code>pip</code></p> <pre class="bash top2"><code>$ virtualenv -p python3 venv
+$ . venv/bin/activate
+(venv) $ pip install pyinstaller --upgrade</code></pre> </li> <li> <p>Finalise and Save your python script : <code>hello.py</code></p> <pre class="python top2"><code>#!/usr/bin/env python3 
+
+print("Hello World")</code></pre> </code></pre> </li> <li> <p>Test your python code before generating actual binary</p> <pre class="bash top2"><code>virtualenv -p python3 venv
+(venv) $ python hello.py
+
+Hello World</code></pre> </li> <li> <p> Convert Python Script to Binary with Pyinstaller</p> <pre class="bash top2"><code>(venv) $ pyinstaller hello.py --onefile</code></pre> </li> <li> <p> After successful conversion you will be able to Locate and Execute binary file inside <code>./dist</code> with the name <code>hello</code></p> <pre class="bash top2"><code>$ ls ./dist/hello
+hello
+
+$ ./dist/hello
+
+Hello World</code></pre> </li> </ul> <hr> <h4>Known Issues with Pyinstaller</h4> <p> During the prcess of generating binary file, you might receive following error with upx. </p> <div class="card alert-warning top2"> <pre class="card-body">----------------------------------------
+Error running 'upx -V':
+[Errno 13] Permission denied: 'upx'
+----------------------------------------
+Error: Executing command failed!</pre> </div> <pre class="bash top2"><code>(venv) $ pyinstaller hello.py --onefile
+67 INFO: PyInstaller: 4.3
+67 INFO: Python: 3.6.8
+69 INFO: Platform: Linux-3.10.0-1160.21.1.el7.x86_64-x86_64-with-redhat-7.9-Maipo
+70 INFO: wrote /code/hello.spec
+----------------------------------------
+Error running 'upx -V':
+[Errno 13] Permission denied: 'upx'
+----------------------------------------
+Error: Executing command failed!</code></pre> <p><strong>To resolve this issue</strong>, you can use following command</p> <pre class="bash top2"><code>pyinstaller hello.py --upx-dir=..\upx391w -y --onefile</code></pre> <hr> <h3>Conclusion</h3> <div class="card"> <p class="card-body"> We learned how to convert python script into distributable binary file with pyinstaller. </p> </div> <p class="top3">Tagged Under :<span itemprop="keywords"> <a href="/tag/linux/">Linux</a> <a href="/tag/python/">Python</a> <a href="/tag/windows/">Windows</a> </span> </p> </article> <div class="top3"> <div class="col-sm-9"> <span class="float-left"> <a class="btn btn-secondary btn-md" role="button" aria-disabled="false" href="/81/redshift-odbc-linux/" title="AWS Redshift ODBC Connection - Redhat Linux">Previous</a> </span> <span class="float-right"> <a class="btn btn-secondary btn-md" role="button" aria-disabled="false" href="/83/executable-but-not-readable/" title="How to Make Non Readable Linux File Executable">Next</a> </span> </div> </div> </main> <aside class="col-lg-3 top5" id="sidebar"> <div class="text-right"> <h3>Tags</h3> <nav> <ul> <li class="list-unstyled"><a href="/tag/davmail/" title="Davmail Setup and Configuration">Davmail</a></li> <li class="list-unstyled"><a href="/tag/flask/" title="Flask Web Development">Flask</a></li> <li class="list-unstyled"><a href="/tag/google-cloud/" title="Google Cloud Tutorials and Examples">Google Cloud</a></li> <li class="list-unstyled"><a href="/tag/informatica/" title="Informatica Administration Tutorials">Informatica</a></li> <li class="list-unstyled"><a href="/tag/linux/" title="Linux Desktop and Server - Tutorials">Linux</a></li> <li class="list-unstyled"><a href="/tag/localtunnel/" title="Localtunnel Tutorials -  HTTP Tunnel in Action">Localtunnel</a></li> <li class="list-unstyled"><a href="/tag/open-source/" title="Tutorials about open source software ">Open Source</a></li> <li class="list-unstyled"><a href="/tag/python/" title="Python Programming">Python</a></li> <li class="list-unstyled"><a href="/tag/raspberry-pi/" title="Raspberry Pi Tutorials and Hacks">Raspberry Pi</a></li> <li class="list-unstyled"><a href="/tag/thunderbird/" title="Thunderbird Tutorials">Thunderbird</a></li> <li class="list-unstyled"><a href="/tag/ubuntu/" title="Ubuntu Tutorials">Ubuntu</a></li> <li class="list-unstyled"><a href="/tag/web/" title="Tutorials for Full Stack Web Developers">Web</a></li> <li class="list-unstyled"><a href="/tag/windows/" title="Windows Software and Tutorials">Windows</a></li> <li class="list-unstyled"><a href="/tag/wordpress/" title="Wordpress Tutorials and Guides">Wordpress</a></li> </ul> </nav> </div> <div class="top4 bottom4 float-left"> <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> <ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-1476292113673713" data-ad-slot="8720400182"></ins> <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script> <div> <div class="text-center"> <a class="top5" href="/feeds/" title="Atom Feed - Tech Monger"><i class="fa fa-rss" aria-hidden="true"></i>&nbsp;&nbsp;Feeds</a> </div> </aside> </div> <hr class="top3"> <footer class="top5 text-secondary"> <div class="container-fluid text-center text-md-left"> <div class="row"> <div class="col-md-4 mt-md-0 mt-3"> <h5 class="text-uppercase">About</h5> <p>Techmonger is a web log which shares interesting articles about computer science, programming and web development.</p> </div> <hr class="clearfix w-100 d-md-none pb-3"> <div class="col-md-3 mb-md-0 mb-3"> <h5 class="text-uppercase">Pages</h5> <ul class="list-unstyled"> <li> <a href="/privacy.html">Privacy Policy</a> </li> <li> <a href="/contact.html">Contact</a> </li> </ul> </div> <div class="col-md-5 mb-md-0 mb-3"> <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> <ins class="adsbygoogle" style="display:inline-block;width:468px;height:60px" data-ad-client="ca-pub-1476292113673713" data-ad-slot="1929762560"></ins> <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            </script> </div> </div> </div> </footer> <div class="top3"></div> <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css"> <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script> <script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#ffffff"
+    },
+    "button": {
+      "background": "#e0e0e0",
+      "text": "#0a0202"
+    }
+  },
+  "theme": "edgeless",
+  "content": {
+    "dismiss": "Accept",
+    "href": "/privacy.html"
+  }
+})});
+</script> </div> <link rel="stylesheet" type="text/css" href="/static/css/style.css"> <script src="/static/js/scripts.js"></script> <script>hljs.initHighlightingOnLoad();</script> </body> </html>
